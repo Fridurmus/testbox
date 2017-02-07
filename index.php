@@ -6,4 +6,8 @@
  * Time: 5:35 PM
  */
 
-echo "Hello, world!";
+require_once "core/header.php";
+
+
+require_once "core/footer.php";
+?>
