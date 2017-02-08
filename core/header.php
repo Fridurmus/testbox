@@ -22,7 +22,6 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -32,8 +31,17 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="index.php">Home</a>
             </li>
         </ul>
     </div>
+
+    <div class="navbar navbar-nav navbar-right">
+        <a class="btn btn-sm btn-outline-primary" role="button" id="userStateButton" href="login.php">Login</a>
+    </div>
+    <div class="navbar navbar-nav navbar-right" id="registerButton">
+        <a class="btn btn-sm btn-outline-primary" role="button" id="registerUserButton" href="register.php">Register</a>
+    </div>
 </nav>
+
+<body>
