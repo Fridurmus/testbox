@@ -18,11 +18,12 @@ function textForm($label, $idname, $phtext, $value='', $req='')
 EOD;
 }
 
-function numForm($label, $idname, $max='', $min='', $value=''){
+function numForm($label, $idname, $max='', $min='', $value='', $req=''){
+    ($req = 'r')  ? $reqstr = 'required' : $reqstr = '';
     return <<<EOD
             <div class="form-group">
             <label for="$idname">$label</label>
-            <input type="number" class="form-control" id="$idname" name="$idname" value="$value" max="$max" min="$min" step="any" required> 
+            <input type="number" class="form-control" id="$idname" name="$idname" value="$value" max="$max" min="$min" step="any" $reqstr> 
             </input>
             </div>
 EOD;
@@ -45,21 +46,33 @@ function selectForm($label, $idname, $valuearray=''){
 EOD;
 }
 
-function dateForm($label, $idname, $value=''){
+function dateForm($label, $idname, $value='', $req=''){
+    ($req = 'r')  ? $reqstr = 'required' : $reqstr = '';
     return <<<EOD
             <div class="form-group">
             <label for="$idname">$label</label>
-            <input type="date" class="form-control" id="$idname" name="$idname" value="$value" required> 
+            <input type="date" class="form-control" id="$idname" name="$idname" value="$value" $reqstr> 
             </input>
             </div>
 EOD;
 }
 
-function timeForm($label, $idname, $value=''){
+function timeForm($label, $idname, $value='', $req=''){
+    ($req = 'r')  ? $reqstr = 'required' : $reqstr = '';
     return <<<EOD
             <div class="form-group">
             <label for="$idname">$label</label>
-            <input type="time" class="form-control" id="$idname" name="$idname" value="$value" required> 
+            <input type="time" class="form-control" id="$idname" name="$idname" value="$value" $reqstr> 
+            </input>
+            </div>
+EOD;
+}
+
+function hiddenForm($idname, $value='', $req=''){
+    ($req = 'r')  ? $reqstr = 'required' : $reqstr = '';
+    return <<<EOD
+            <div class="form-group">
+            <input type="hidden" class="form-control" id="$idname" name="$idname" value="$value" $reqstr 
             </input>
             </div>
 EOD;

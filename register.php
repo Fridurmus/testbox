@@ -60,6 +60,7 @@ require_once "core/footer.php";
 <script>
     $("#registerForm").on("submit", function (e){
         (e).preventDefault();
-        console.log( $( this ).serialize());
+        const registerData = $( this ).serialize();
+        
     })
 </script>
