@@ -6,13 +6,14 @@
  * Time: 2:35 PM
  */
 
-function textForm($label, $idname, $phtext, $value='', $req='')
+function textForm($label, $idname, $phtext, $value='', $req='', $extClass = array(''))
 {
     ($req = 'r')  ? $reqstr = 'required' : $reqstr = '';
+    $extClasses = join($extClass, ' ');
     return <<<EOD
             <div class="form-group">
             <label for="$idname">$label</label>
-            <input type="text" class="form-control" id="$idname" name="$idname", placeholder="$phtext" value="$value" $reqstr> 
+            <input type="text" class="form-control $extClasses" id="$idname" name="$idname", placeholder="$phtext" value="$value" $reqstr> 
             </input>
             </div>
 EOD;

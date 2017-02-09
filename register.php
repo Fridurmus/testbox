@@ -20,12 +20,19 @@ foreach ($preExistUsers as $preExistUser){
 
 $newUserName = textForm("Username", "newUserName", "Something clever.", '', 'r');
 $newLoginName = textForm("Login Name", "newLoginName", "Ideally not just your Username.", '', 'r');
-$newPassword = textForm("Password", "newPassword", "Something you'll remember.", '', 'r');
-$passwordVerfiy = textForm("Verify Password", "newPasswordVerify", "Second verse, same as the first.", '', 'r');
+$newPassword = textForm("Password", "newPassword", "Something you'll remember.", '', 'r', ['passVerifyForm']);
+$passwordVerify = textForm("Verify Password", "newPasswordVerify", "Second verse, same as the first.", '', 'r', ['passVerifyForm']);
 
 ?>
 
 <div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div id="messagebox">
+
+            </div>
+        </div>
+    </div>
     <form id="registerForm">
         <div class="row">
             <div class="col-md-4 offset-md-2">
@@ -36,31 +43,37 @@ $passwordVerfiy = textForm("Verify Password", "newPasswordVerify", "Second verse
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4 offset-md-2">
+            <div class="passVerify col-md-4 offset-md-2 form-group">
                 <?=$newPassword?>
             </div>
-            <div class="col-md-4">
-                <?=$passwordVerfiy?>
+            <div class="passVerify col-md-4 form-group">
+                <?=$passwordVerify?>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4 offset-md-6">
-                <button class="btn btn-primary pull-right">Register</button>
+                <button id="registerSubmit" class="btn btn-primary pull-right">Register</button>
             </div>
         </div>
     </form>
 </div>
 
 
-
 <?php
 require_once "core/footer.php";
 ?>
-
+<script type="text/javascript" src="scripts/form_verification.js"></script>
 <script>
-    $("#registerForm").on("submit", function (e){
-        (e).preventDefault();
-        const registerData = $( this ).serialize();
-        
-    })
+    $(".passVerifyForm").on("keyup", function(){
+        let $passIn = $("#newPassword").val();
+        let $passVal = $("#newPasswordVerify").val();
+        console.log($passIn + "|" + $passVal);
+        if($passVal != $passIn || $passVal.length == 0 || $passIn.length == 0){
+            verifyError(".passVerifyForm", ".passVerify", "#registerSubmit");
+        }
+        else{
+            verifySuccess(".passVerifyForm", ".passVerify", "#registerSubmit");
+        }
+    });
 </script>
+<script type="text/javascript" src="scripts/register_handling.js"></script>
