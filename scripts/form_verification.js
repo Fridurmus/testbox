@@ -16,3 +16,11 @@ function verifySuccess(formClass, formGroupClass, formButton){
     $(formGroupClass).addClass("has-success");
     $(formButton).prop("disabled", false);
 }
+
+function verifyClear(formClass, formGroupClass, formButton){
+    $(formClass).removeClass("form-control-danger");
+    $(formGroupClass).removeClass("has-danger");
+    $(formClass).removeClass("form-control-success");
+    $(formGroupClass).removeClass("has-success");
+    $(formButton).prop("disabled", false);
+}

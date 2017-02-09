@@ -18,8 +18,8 @@ foreach ($preExistUsers as $preExistUser){
     array_push($existingUsers, $user_name);
 }
 
-$newUserName = textForm("Username", "newUserName", "Something clever.", '', 'r');
-$newLoginName = textForm("Login Name", "newLoginName", "Ideally not just your Username.", '', 'r');
+$newUserName = textForm("Username", "newUserName", "Something clever.", '', 'r', ['newUserNameForm']);
+$newEmail = emailForm("Email Address", "newEmail", "default@example.com", '', 'r', ['newEmailForm']);
 $newPassword = textForm("Password", "newPassword", "Something you'll remember.", '', 'r', ['passVerifyForm']);
 $passwordVerify = textForm("Verify Password", "newPasswordVerify", "Second verse, same as the first.", '', 'r', ['passVerifyForm']);
 
@@ -35,11 +35,13 @@ $passwordVerify = textForm("Verify Password", "newPasswordVerify", "Second verse
     </div>
     <form id="registerForm">
         <div class="row">
-            <div class="col-md-4 offset-md-2">
+            <div class="userName col-md-4 offset-md-2 form-group">
                 <?=$newUserName?>
+                <div id="takenUserName" class="form-control-feedback collapse">Sorry, that username's taken.</div>
             </div>
-            <div class="col-md-4">
-                <?=$newLoginName?>
+            <div class="newEmail col-md-4 form-group">
+                <?=$newEmail?>
+                <div id="invalidEmail" class="form-control-feedback collapse">Please enter a valid email.</div>
             </div>
         </div>
         <div class="row">
@@ -48,6 +50,7 @@ $passwordVerify = textForm("Verify Password", "newPasswordVerify", "Second verse
             </div>
             <div class="passVerify col-md-4 form-group">
                 <?=$passwordVerify?>
+                <div id="pwNoMatch" class="form-control-feedback collapse">Make sure both passwords match!</div>
             </div>
         </div>
         <div class="row">
@@ -64,15 +67,53 @@ require_once "core/footer.php";
 ?>
 <script type="text/javascript" src="scripts/form_verification.js"></script>
 <script>
+    //noinspection JSAnnotator
+    const existingUsers = <?PHP echo json_encode($existingUsers); ?>;
+
+    console.log(existingUsers);
     $(".passVerifyForm").on("keyup", function(){
         let $passIn = $("#newPassword").val();
         let $passVal = $("#newPasswordVerify").val();
-        console.log($passIn + "|" + $passVal);
-        if($passVal != $passIn || $passVal.length == 0 || $passIn.length == 0){
+        if($passVal != $passIn){
             verifyError(".passVerifyForm", ".passVerify", "#registerSubmit");
+            $("#pwNoMatch").addClass("show");
+        }
+        else if($passVal.length == 0 && $passIn.length == 0){
+            verifyClear(".passVerifyForm", ".passVerify", "#registerSubmit");
+            $("#pwNoMatch").removeClass("show");
         }
         else{
             verifySuccess(".passVerifyForm", ".passVerify", "#registerSubmit");
+            $("#pwNoMatch").removeClass("show");
+        }
+    });
+    $("#newUserName").on("keyup", function(){
+        if(existingUsers.includes($(this).val())){
+            verifyError(".newUserNameForm", ".userName", "#registerSubmit");
+            $("#takenUserName").addClass("show");
+        }
+        else if($(this).val().length == 0){
+            verifyClear(".newUserNameForm", ".userName", "#registerSubmit");
+            $("#takenUserName").removeClass("show");
+        }
+        else{
+            verifySuccess(".newUserNameForm", ".userName", "#registerSubmit");
+            $("#takenUserName").removeClass("show");
+        }
+    });
+    $("#newEmail").on("keyup", function(){
+        let emailValue = $(this).val();
+        if(emailValue.length == 0){
+            verifyClear(".newEmailForm", ".newEmail", "#registerSubmit");
+            $("#invalidEmail").removeClass("show");
+        }
+        else if($(this)[0].checkValidity()){
+            verifySuccess(".newEmailForm", ".newEmail", "#registerSubmit");
+            $("#invalidEmail").removeClass("show");
+        }
+        else{
+            verifyError(".newEmailForm", ".newEmail", "#registerSubmit");
+            $("#invalidEmail").addClass("show");
         }
     });
 </script>

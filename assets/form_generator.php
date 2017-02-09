@@ -19,6 +19,19 @@ function textForm($label, $idname, $phtext, $value='', $req='', $extClass = arra
 EOD;
 }
 
+function emailForm($label, $idname, $phtext, $value='', $req='', $extClass = array(''))
+{
+    ($req = 'r')  ? $reqstr = 'required' : $reqstr = '';
+    $extClasses = join($extClass, ' ');
+    return <<<EOD
+            <div class="form-group">
+            <label for="$idname">$label</label>
+            <input type="email" class="form-control $extClasses" id="$idname" name="$idname", placeholder="$phtext" value="$value" $reqstr> 
+            </input>
+            </div>
+EOD;
+}
+
 function numForm($label, $idname, $max='', $min='', $value='', $req=''){
     ($req = 'r')  ? $reqstr = 'required' : $reqstr = '';
     return <<<EOD
