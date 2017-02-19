@@ -6,8 +6,8 @@
  * Time: 12:04 PM
  */
 require_once '../assets/database_functions.php';
-$userName = $_POST['newUserName'];
-$newEmail = $_POST['newEmail'];
+$userName = htmlspecialchars($_POST['newUserName']);
+$newEmail = htmlspecialchars($_POST['newEmail']);
 $newPassword = password_hash($_POST['newPassword'], PASSWORD_DEFAULT);
 
 $sql = "INSERT INTO users (user_name, email_addr, user_pw_hash)
