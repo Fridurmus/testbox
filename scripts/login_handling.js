@@ -27,7 +27,7 @@ $("#loginForm").on("submit", (function (e) {
         if(resultstate){
             $("#messagebox").append(successmess);
             setTimeout(function(){
-                //location.replace("./index.php");
+                location.replace("./index.php");
             }, 2000);
         }
         else{
