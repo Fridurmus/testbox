@@ -12,13 +12,15 @@ require_once "assets/form_generator.php";
 if (isset($_SESSION['user'])){
     header("Location: index.php");
 }
-$existingUsers = [];
-$preExistUserSql = "SELECT user_name
+$existingUsers   = [];
+$existingEmails  = [];
+$preExistUserSql = "SELECT user_name, email_addr
                     FROM users";
 $preExistUsers = pdoSelect($preExistUserSql);
 foreach ($preExistUsers as $preExistUser){
     extract($preExistUser);
     array_push($existingUsers, $user_name);
+    array_push($existingEmails, $email_addr);
 }
 
 $newUserName = textForm("Username", "newUserName", "Something clever.", '', 'r', ['newUserNameForm']);
@@ -45,6 +47,7 @@ $passwordVerify = textForm("Verify Password", "newPasswordVerify", "Second verse
             <div class="newEmail col-md-4 form-group">
                 <?=$newEmail?>
                 <div id="invalidEmail" class="form-control-feedback collapse">Please enter a valid email.</div>
+                <div id="takenEmail" class="form-control-feedback collapse">A user with that email already exists.</div>
             </div>
         </div>
         <div class="row">
@@ -72,6 +75,7 @@ require_once "core/footer.php";
 <script type="text/javascript" src="scripts/form_verification.js"></script>
 <!-- Passing existing users array from PHP to JS -->
 <script>const existingUsers = <?PHP echo json_encode($existingUsers); ?>;</script>
+<script>const existingEmails = <?PHP echo json_encode($existingEmails); ?>;</script>
 <!-- Registration form validation script -->
 <script type="text/javascript" src="scripts/register_form_validate.js"></script>
 <!-- Registration form submission handling -->

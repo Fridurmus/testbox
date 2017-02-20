@@ -1,6 +1,5 @@
 //noinspection JSAnnotator
-
-console.log(existingUsers);
+;
 $(".passVerifyForm").on("keyup", function(){
     let $passIn = $("#newPassword").val();
     let $passVal = $("#newPasswordVerify").val();
@@ -36,14 +35,22 @@ $("#newEmail").on("keyup", function(){
     if(emailValue.length == 0){
         verifyClear(".newEmailForm", ".newEmail", "#registerSubmit");
         $("#invalidEmail").removeClass("show");
+        $("#takenEmail").removeClass("show");
+    }
+    else if(existingEmails.includes($(this).val())){
+        verifyError(".newEmailForm", ".newEmail", "registerSubmit");
+        $("#invalidEmail").removeClass("show");
+        $("#takenEmail").addClass("show");
     }
     else if($(this)[0].checkValidity()){
         verifySuccess(".newEmailForm", ".newEmail", "#registerSubmit");
         $("#invalidEmail").removeClass("show");
+        $("#takenEmail").removeClass("show");
     }
     else{
         verifyError(".newEmailForm", ".newEmail", "#registerSubmit");
         $("#invalidEmail").addClass("show");
+        $("#takenEmail").removeClass("show");
     }
 });/**
  * Created by fridurmus on 2/9/17.
