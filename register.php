@@ -9,6 +9,9 @@
 require_once "core/header.php";
 require_once "assets/database_functions.php";
 require_once "assets/form_generator.php";
+if (isset($_SESSION['user'])){
+    header("Location: index.php");
+}
 $existingUsers = [];
 $preExistUserSql = "SELECT user_name
                     FROM users";

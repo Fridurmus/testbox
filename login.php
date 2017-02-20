@@ -5,13 +5,16 @@
  * Date: 2/9/17
  * Time: 10:09 PM
  */
-
 require_once "core/header.php";
 require_once "assets/database_functions.php";
 require_once "assets/form_generator.php";
 
 $loginUserName = textForm("Username", "loginUserName", "", '', 'r', ['userNameForm']);
 $loginPassword = textForm("Password", "loginPassword", "", '', 'r', ['passwordForm']);
+
+if (isset($_SESSION['user'])){
+    header("Location: index.php");
+}
 ?>
 
 <div class="container">

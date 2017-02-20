@@ -5,6 +5,7 @@
  * Date: 2/11/17
  * Time: 3:27 PM
  */
+session_start();
 require_once '../assets/database_functions.php';
 $userName = htmlspecialchars($_POST['loginUserName']);
 $userPassword = $_POST['loginPassword'];
@@ -19,6 +20,7 @@ $userRecord = pdoSelect($sql, $vars);
 if($userRecord){
     extract($userRecord[0]);
     if(password_verify($userPassword, $user_pw_hash)) {
+        $_SESSION['user'] = $userName;
         echo '|s';
     }
     else {

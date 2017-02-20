@@ -5,6 +5,7 @@
  * Date: 2/7/17
  * Time: 5:42 PM
  */
+session_start();
 ?>
 <!DOCTYPE HTML>
 <html lang="en">
@@ -35,13 +36,29 @@
             </li>
         </ul>
     </div>
+<?php
+    if(!isset($_SESSION['user'])) {
+        echo <<<OUT
+        <div class="navbar navbar-nav navbar-right">
+            <a class="btn btn-sm btn-outline-primary" role="button" id="userStateButton" href="login.php">Login</a>
+        </div>
+        <div class="navbar navbar-nav navbar-right" id="registerButton">
+            <a class="btn btn-sm btn-outline-primary" role="button" id="registerUserButton" href="register.php">Register</a>
+        </div>
+OUT;
+    } else {
+        $username = htmlspecialchars($_SESSION['user']);
+        echo <<<INL
+        <div class="navbar navbar-nav navbar-right">
+            <span>$username</span>
+        </div>
+        <div class="navbar navbar-nav navbar-right">
+            <a class="btn btn-sm btn-outline-primary" role="button" id="userStateButton" href="processing/logout.php">Logout</a>
+        </div>
+INL;
 
-    <div class="navbar navbar-nav navbar-right">
-        <a class="btn btn-sm btn-outline-primary" role="button" id="userStateButton" href="login.php">Login</a>
-    </div>
-    <div class="navbar navbar-nav navbar-right" id="registerButton">
-        <a class="btn btn-sm btn-outline-primary" role="button" id="registerUserButton" href="register.php">Register</a>
-    </div>
+    }
+?>
 </nav>
 
 <body>
